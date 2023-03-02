@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+.app {
+    @apply flex justify-center items-center w-full h-full
+}
+
+.line-button{
+    @apply border text-sm border-black rounded-md px-2 hover:bg-black hover:text-white
+}
+
+.notes_panel{
+    @apply flex w-2/6 flex-col h-4/6 bg-transparent rounded-lg border-red-400 border-4
+}
+
+.notes_panel > .notes {
+    @apply w-full overflow-auto max-h-full
+}
+
+.header {
+    @apply text-3xl
+}
+
+.note_line{
+    @apply w-full h-auto border-2 rounded-lg border-rose-300
+}
+
+.note_line > name {
+    @apply flex flex-col items-start h-1/2 w-auto
+}
+
+.note_line > .name > h1{
+    @apply text-lg text-black
+}
+
+.edit {
+    @apply flex flex-row items-end justify-end
+}
+
+.edit > button {
+    @apply w-1/6 h-full border-2 border-blue-400 text-sm rounded-3xl py-4 
+}
