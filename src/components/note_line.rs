@@ -9,7 +9,6 @@ pub struct NoteLineProps {
     pub id: u64,
     pub title: String,
     pub last_edited: DateTime<Utc>,
-    pub edit_click_callback: Callback<u64>
 }
 
 #[function_component]
@@ -48,6 +47,7 @@ pub fn NoteLine(props: &NoteLineProps) -> Html{
             </div>
         } else {
             <div class={"edit"}>
+                <h1 class="my-4 mx-5 h-full">{&props.title}</h1>
                 <button onclick={on_edit_click}>{"Edit"}</button>
                 <button onclick={on_delete_click}>{"Delete"}</button>
             </div>

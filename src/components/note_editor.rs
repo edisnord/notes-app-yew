@@ -2,8 +2,6 @@ use crate::routes;
 use crate::store;
 use crate::StateContext;
 use wasm_bindgen::JsCast;
-use web_sys::HtmlDivElement;
-use web_sys::HtmlElement;
 use log::info;
 use web_sys::HtmlInputElement;
 use web_sys::HtmlTextAreaElement;

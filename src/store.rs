@@ -1,4 +1,4 @@
-use std::{num, rc::Rc};
+use std::{rc::Rc};
 
 use chrono::{DateTime, Utc};
 use yew::Reducible;
@@ -7,7 +7,7 @@ use yew::Reducible;
 pub struct Note {
     pub id: u64,
     pub title: String,
-    pub last_updated: DateTime<Utc>,
+    pub last_modified: DateTime<Utc>,
     pub contents: String,
 }
 
@@ -16,7 +16,7 @@ impl Note {
         Note {
             id,
             title: title.to_owned(),
-            last_updated: Utc::now(),
+            last_modified: Utc::now(),
             contents: contents.to_owned(),
         }
     }
@@ -37,7 +37,7 @@ impl Reducible for State {
                 let last_id = self.notes.iter().last().unwrap().id;
                 let mut new_notes = self.notes.clone();
                 State {
-                    notes: {new_notes.push(Note::new(last_id, &title, &contents)); new_notes},
+                    notes: {new_notes.push(Note::new(last_id + 1, &title, &contents)); new_notes},
                     ..*self
                 }
             },

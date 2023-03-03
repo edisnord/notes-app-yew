@@ -1,34 +1,50 @@
-use yew::{function_component, html, Html, Properties, Callback};
+use yew::{function_component, html, Html};
 use yew::prelude::*;
+use yew_router::prelude::use_navigator;
 use crate::StateContext;
+use crate::routes::Route;
 use crate::store;
-use super::NoteLine;
-
-#[derive(Properties)]
-pub struct NotesPanelProps{
-    pub edit_click_callback: Callback<u64>,
-    pub delete_click_callback: Callback<u64>
-}
-
-impl PartialEq for NotesPanelProps {
-    fn eq(&self, other: &Self) -> bool {
-        self.edit_click_callback == other.edit_click_callback && self.delete_click_callback == other.delete_click_callback
-    }
-}
+use super::note_line::NoteLine;
 
 #[function_component]
-pub fn NotesPanel(props: &NotesPanelProps) -> Html {
+pub fn NotesPanel() -> Html {
     let ctx = use_context::<StateContext>().expect("Use context error");
-    let store::State {notes, ..} = (*ctx).clone();
+    let store::State {mut notes, ..} = (*ctx).clone();
+    notes.sort_by(|note1, note2| note2.last_modified.cmp(&note1.last_modified));
+    let editing = use_state(|| false);
+
+    {
+        let ctx = ctx.clone();
+        let editing = editing.clone();
+        let navigator = use_navigator().unwrap();
+
+        use_effect(move || {
+            if *editing {
+                let new_note_id = (*ctx).notes.iter().last().unwrap().id;
+                navigator.push(&Route::EditNote { id: new_note_id.to_string() });
+                editing.set(false);
+            }
+        });
+    }
+
+    let on_create_click = {
+        let ctx = ctx.clone();
+        let editing = editing.clone();
+        Callback::from(move |_| {
+            ctx.dispatch(store::Action::AddNote { title: "New note".to_owned(), contents: String::new()});
+            editing.set(true);
+        })
+    };
 
     html!{
         <div class={"notes_panel"}>
             <p class={"header"}>{"Notes: "}</p>
             <div class={"notes"}>
                 {notes.into_iter().map(|note| html!{
-                    <NoteLine id={note.id} title={note.title} last_edited={note.last_updated} edit_click_callback={props.edit_click_callback.clone()} />
+                    <NoteLine id={note.id} title={note.title} last_edited={note.last_modified} />
                 }).collect::<Html>()}
             </div>
+            <button onclick={on_create_click} class={"button_with_hover"}>{"Create Note"}</button>
         </div>
     }
 }

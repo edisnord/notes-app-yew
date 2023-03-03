@@ -3,7 +3,6 @@ mod routes;
 mod store;
 
 use components::{NotesPanel, NoteEditor};
-use log::info;
 use routes::Route;
 use yew::prelude::*;
 use yew::{function_component, html, Html};
@@ -13,13 +12,16 @@ type StateContext = UseReducerHandle<store::State>;
 
 #[function_component(App)]
 fn app() -> Html {
+    // Whole application state kept in a use reducer handle,
+    // which will be passed to the context
     let state = use_reducer(store::State::default);
 
+    // Handles what to render on different routes
     let route_switch = {
         let state = state.clone();
         move |routes: Route| match routes {
             Route::Home => html! {
-                <NotesPanel edit_click_callback={|_|{}} delete_click_callback={|_|{}} />
+                <NotesPanel />
             },
             Route::EditNote { id } => {
                 let id: u64 = match id.parse(){
@@ -44,13 +46,6 @@ fn app() -> Html {
                 </BrowserRouter>
             </ContextProvider<StateContext>>
         </div>
-    }
-}
-
-fn switch(routes: Route) -> Html {
-    match routes {
-        Route::Home => todo!(),
-        Route::EditNote { id } => todo!(),
     }
 }
 

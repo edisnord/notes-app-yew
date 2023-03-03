@@ -53,7 +53,7 @@ body{
 }
 
 .edit {
-    @apply flex flex-row items-end justify-end
+    @apply flex flex-row items-end justify-end align-middle
 }
 
 .edit > button {
