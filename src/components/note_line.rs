@@ -1,7 +1,8 @@
 use chrono::{DateTime, Utc};
 use yew::{function_component, Html, Properties, Callback, html, use_state, use_context};
+use yew_router::prelude::use_navigator;
 
-use crate::{StateContext, store};
+use crate::{StateContext, store, routes};
 
 #[derive(Properties, PartialEq)]
 pub struct NoteLineProps {
@@ -31,6 +32,12 @@ pub fn NoteLine(props: &NoteLineProps) -> Html{
         let id = props.id.clone();
         Callback::from(move |_|{ctx.dispatch(store::Action::RmNote { number: id });})
     };
+
+    let on_edit_click = {
+        let navigator = use_navigator().unwrap();
+        let id = props.id.clone();
+        Callback::from(move |_| {navigator.push(&routes::Route::EditNote { id: format!("{}", id)});})
+    };
     
     html!{
         <div class={"note_line"} onmouseenter={on_mouse_enter} onmouseleave={on_mouse_leave}>
@@ -41,7 +48,7 @@ pub fn NoteLine(props: &NoteLineProps) -> Html{
             </div>
         } else {
             <div class={"edit"}>
-                <button>{"Edit"}</button>
+                <button onclick={on_edit_click}>{"Edit"}</button>
                 <button onclick={on_delete_click}>{"Delete"}</button>
             </div>
         }

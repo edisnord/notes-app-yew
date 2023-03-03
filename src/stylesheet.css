@@ -21,11 +21,15 @@ body{
 }
 
 .notes_panel{
-    @apply flex w-2/6 flex-col h-4/6 bg-transparent rounded-lg border-red-400 border-4
+    @apply flex lg:w-2/6 md:w-1/2 sm:w-4/6 flex-col h-4/6 bg-transparent rounded-lg border-red-400 border-4
 }
 
 .editor_panel{
-    @apply flex w-2/6 flex-col h-4/6 items-center bg-transparent rounded-lg border-red-400 border-4
+    @apply flex lg:w-2/6 md:w-1/2 sm:w-4/6 min-[0px]:w-full  flex-col h-4/6 items-center bg-transparent rounded-lg border-red-400 border-4
+}
+
+.editor_panel > .title {
+    @apply outline-none
 }
 
 .notes_panel > .notes {
@@ -53,5 +57,9 @@ body{
 }
 
 .edit > button {
-    @apply w-1/6 h-full border-2 border-blue-400 text-sm rounded-3xl py-4 
+    @apply w-1/6 h-full text-sm py-4 button_with_hover
+}
+
+.button_with_hover {
+    @apply hover:bg-cyan-800 hover:text-white border-cyan-800 border-2 rounded-3xl
 }
