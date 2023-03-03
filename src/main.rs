@@ -2,7 +2,7 @@ mod components;
 mod routes;
 mod store;
 
-use components::notes_panel::NotesPanel;
+use components::{NotesPanel, NoteEditor};
 use routes::Route;
 use yew::prelude::*;
 use yew::{function_component, html, Html};
@@ -28,12 +28,9 @@ fn app() -> Html {
 
                 let store::State{notes, ..} = (*state).clone();
                 match notes.into_iter().find(|note| note.id == id) {
-                    Some(note) => {
-                        
-                    },
+                    Some(note) => html!{<NoteEditor id={note.id} title={note.title} contents={note.contents}/>},
                     None => return html! {<p>{"Unknown ID passed to route"}</p>}
                 }
-                html! {<p>{"WIP"}</p>}
             }
         }
     };

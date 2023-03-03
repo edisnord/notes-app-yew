@@ -2,7 +2,7 @@ use yew::{function_component, html, Html, Properties, Callback};
 use yew::prelude::*;
 use crate::StateContext;
 use crate::store;
-use crate::components::note_line::NoteLine;
+use super::NoteLine;
 
 #[derive(Properties)]
 pub struct NotesPanelProps{

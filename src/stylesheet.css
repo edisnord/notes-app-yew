@@ -8,6 +8,10 @@ body{
     height: 100vh;
 }
 
+.editor{
+    @apply break-all
+}
+
 .app {
     @apply flex justify-center items-center w-full h-full
 }
@@ -18,6 +22,10 @@ body{
 
 .notes_panel{
     @apply flex w-2/6 flex-col h-4/6 bg-transparent rounded-lg border-red-400 border-4
+}
+
+.editor_panel{
+    @apply flex w-2/6 flex-col h-4/6 items-center bg-transparent rounded-lg border-red-400 border-4
 }
 
 .notes_panel > .notes {
