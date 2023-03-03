@@ -10,12 +10,15 @@ jobs:
         uses: dtolnay/rust-toolchain@v1
         with:
             toolchain: stable
-            targets: wasm32-unknown-unknown
-      - run: cargo install trunk
+      - run: rustup target add wasm32-unknown-unknown
+      - name: trunk-action
+        uses: jetli/trunk-action@v0.4.0
+      - run: apt install nodejs npm
+      - run: npm install -D tailwindcss postcss autoprefixer
       - name: Checkout repo
         uses: actions/checkout@v3
       - run: cd ${{ github.workspace }}
-      - run: ~/.cargo/bin/trunk build
+      - run: trunk build
       - uses: actions/upload-pages-artifact@v1.0.7
         with:
             path: "dist/"
