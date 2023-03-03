@@ -18,11 +18,10 @@ jobs:
       - uses: jetli/wasm-pack-action@v0.3.0
         with:
           version: 'latest'
+      - name: trunk-action
+        uses: jetli/trunk-action@v0.4.0
       - name: trunk build
-        env: VERSION=v0.6.0
-        run: |
-            wget -qO- https://github.com/thedodd/trunk/releases/download/${VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
-            trunk build
+        run: trunk build
       - name: Deploy to github pages
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
