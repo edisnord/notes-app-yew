@@ -1,0 +1,23 @@
+name: Deploy Yew App
+run-name: Deploying Yew App
+
+on: [push]
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install rustup toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+            toolchain: stable
+            targets: wasm32-unknown-unknown
+      - run: cargo install trunk
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - run: cd ${{ github.workspace }}
+      - run: ~/.cargo/bin/trunk build
+      - uses: actions/upload-pages-artifact@v1.0.7
+        with:
+            path: "dist/"
+
+      
